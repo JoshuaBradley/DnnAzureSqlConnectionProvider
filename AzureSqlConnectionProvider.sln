@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureSqlConnectionProvider", "AzureSqlConnectionProvider\AzureSqlConnectionProvider.csproj", "{9D72679A-8EE9-4686-A263-397606A4DDB5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{56390B0B-DDEC-4A87-A81F-1504CCA1FA67}"
+	ProjectSection(SolutionItems) = preProject
+		BuildPackages.bat = BuildPackages.bat
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Deploy|Any CPU = Deploy|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D72679A-8EE9-4686-A263-397606A4DDB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D72679A-8EE9-4686-A263-397606A4DDB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D72679A-8EE9-4686-A263-397606A4DDB5}.Deploy|Any CPU.ActiveCfg = Deploy|Any CPU
+		{9D72679A-8EE9-4686-A263-397606A4DDB5}.Deploy|Any CPU.Build.0 = Deploy|Any CPU
+		{9D72679A-8EE9-4686-A263-397606A4DDB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D72679A-8EE9-4686-A263-397606A4DDB5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
+	EndGlobalSection
+EndGlobal

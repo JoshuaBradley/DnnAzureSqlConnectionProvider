@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="MSBuild.Community.Tasks.Targets" />
+  
+  <Target Name="PackageProvider">
+    <XmlRead Prefix="n"
+                    Namespace="http://schemas.microsoft.com/developer/msbuild/2003"
+                    XPath="dotnetnuke/packages/package[starts-with(@name,'AzureSqlConnectionProvider')]/@version"
+                    XmlFileName="$(MSBuildProjectDirectory)..\$(DNNFileName).dnn">
+      <Output TaskParameter="Value" PropertyName="Version" />
+    </XmlRead>
+    <ItemGroup>
+      <DefaultExclude Include="**\.svn\**" />
+      <DefaultExclude Include="**\bin\**" />
+      <DefaultExclude Include="**\obj\**" />
+      <DefaultExclude Include="**\Release\**" />
+      <DefaultExclude Include="**\Debug\**" />
+      <DefaultExclude Include="**\Test\**" />
+      <DefaultExclude Include="**\TestResults\**" />
+      <DefaultExclude Include="**\doc\**" />
+      <DefaultExclude Include="**\www\**" />
+      <DefaultExclude Include="**\*.user" />
+      <DefaultExclude Include="**\*.suo" />
+      <DefaultExclude Include="**\*.zip" />
+      <DefaultExclude Include="**\*.db" />
+      <DefaultExclude Include="**\*.txt" />
+      <DefaultExclude Include="**\*ReSharper.*\**" />
+      <DefaultExclude Include="**\VRK.Controls\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <InstallInclude Include="$(MSBuildProjectDirectory)\..\AzureSqlConnectionProvider\**\*.*" />
+    </ItemGroup>
+
+    <CreateItem Include="$(MSBuildProjectDirectory)\$(DNNFileName).dnn">
+      <Output TaskParameter="Include" ItemName="PackageManifestFiles" />
+    </CreateItem>
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\$(AssemblyName).dll" DestinationFolder="$(MSBuildProjectDirectory)\Package\bin"/>
+	<Copy SourceFiles="$(MSBuildProjectDirectory)\bin\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.dll" DestinationFolder="$(MSBuildProjectDirectory)\Package\bin"/>
+	<Copy SourceFiles="$(MSBuildProjectDirectory)\bin\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.dll" DestinationFolder="$(MSBuildProjectDirectory)\Package\bin"/>
+    <Copy SourceFiles="@(PackageManifestFiles)" DestinationFolder="$(MSBuildProjectDirectory)\Package" />
+
+    <CreateItem Include="$(MSBuildProjectDirectory)\Package\**\*.*">
+      <Output TaskParameter="Include" ItemName="OutputContent" />
+    </CreateItem>
+    <!-- Create the Install package -->    
+    <Zip Files="@(OutputContent)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_$(Version)_Install.$(Extension)" />
+    <!-- Copy the Install package to the Packages folder -->
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Install.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../package" />
+    
+    <RemoveDir Directories ="$(MSBuildProjectDirectory)\Package" />
+
+    <Delete Files="$(MSBuildProjectDirectory)\Resources.$(Extension)" />
+    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Install.$(Extension)" />
+    
+  </Target>
+</Project>

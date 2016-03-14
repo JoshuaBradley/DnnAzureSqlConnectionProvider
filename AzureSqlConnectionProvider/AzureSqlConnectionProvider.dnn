@@ -1,0 +1,59 @@
+﻿<dotnetnuke type="Package" version="5.0">
+  <packages>
+    <package name="DotNetNuke.CKHtmlEditorProvider" type="Provider" version="01.00.00">
+      <friendlyName>Azure Sql Connection Provider</friendlyName>
+      <description>Azure Sql Connection for DNN</description>
+      <iconFile></iconFile>
+      <owner>
+        <name>Joshua Bradley</name>
+        <organization>Engage Software</organization>
+        <url></url>
+        <email>JBradley@engagesoftware.com</email>
+      </owner>
+      <dependencies>
+        <dependency type="CoreVersion">07.04.00</dependency>
+      </dependencies>
+      <components>
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <path>bin</path>
+              <name>Dnn.AzureSqlConnectionProvider.dll</name>
+            </assembly>
+            <assembly>
+              <path>bin</path>
+              <name>Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.dll</name>
+            </assembly>
+            <assembly>
+              <path>bin</path>
+              <name>Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.dll</name>
+            </assembly>
+          </assemblies>
+        </component>
+        <component type="Config">
+          <config>
+            <configFile>web.config</configFile>
+            <install>
+              <configuration>
+                <nodes>
+                  <node path="/configuration/dotnetnuke/databaseConnection" action="updateattribute" name="defaultProvider" value="AzureSqlConnectionProvider" />
+                  <node path="/configuration/dotnetnuke/databaseConnection/providers" action="update" key="name" collision="ignore">
+                    <add name="AzureSqlConnectionProvider"  type="Dnn.AzureSqlConnectionProvider.AzureSqlConnectionProvider, Dnn.AzureSqlConnectionProvider" />
+                  </node>
+                </nodes>
+              </configuration>
+            </install>
+            <uninstall>
+              <configuration>
+                <nodes>
+                  <node path="/configuration/dotnetnuke/databaseConnection" action="updateattribute" name="defaultProvider" value="SqlDatabaseConnection" />
+                  <node path="/configuration/dotnetnuke/databaseConnection/providers/add[@name='AzureSqlConnectionProvider']" action="remove" />
+                </nodes>
+              </configuration>
+            </uninstall>
+          </config>
+        </component>
+      </components>
+    </package>
+  </packages>
+</dotnetnuke>
